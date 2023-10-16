@@ -1,9 +1,8 @@
 const canvas=document.getElementById("canvas");
 const ctx=canvas.getContext("2d");
-var textWarehouse=[{jn:"国語",en:"kokugo"},{jn:"社会",en:"syakai"},{jn:"微分積分",en:"bibunnsekibunn"}];
-    text=[{x:110,y:150,jn:"国語",en:"kokugo"},{x:250,y:86,jn:"社会",en:"syakai"},
-          {x:350,y:400,jn:"微分積分",en:"bibunnsekibunn"}],
-    enAnswer="kokugo",count=0;
+import textWarehouse from "./タイピング枠落下.json" assert{type:"json"};
+var text=[],
+    enAnswer="kokugo",count=0,i;
 function drawBlock(letter){
     ctx.beginPath();
     ctx.fillStyle="#000000";
@@ -12,14 +11,18 @@ function drawBlock(letter){
     ctx.fillText(letter.jn,letter.x+(letter.en.length-letter.jn.length*2)*6,letter.y-24);
     ctx.rect(letter.x-8,letter.y-51,letter.en.length*12+16,57);
     ctx.lineWidth=1;
-    ctx.strokeStyle="#000000";
+    if (i==0){
+        ctx.strokeStyle="#FF0000";
+    }else{
+        ctx.strokeStyle="#000000";
+    }
     ctx.stroke();
     ctx.closePath();
 }
 function main(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     count++;
-    if (count%50==0){
+    if (count%100==0){
         var number=Math.floor(Math.random()*textWarehouse.length);
         text.push({x:Math.floor(Math.random()*(750-textWarehouse[number].en.length*12))+9,y:0,
                    jn:textWarehouse[number].jn,en:textWarehouse[number].en});
